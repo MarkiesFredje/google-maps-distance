@@ -12,11 +12,22 @@ gdf_belgium = read_file(
 )
 gdf_belgium = gdf_belgium.to_crs("EPSG:4326")
 
-# Finding the closest districts to where I live
+# Cleaning up some column names
+dict_rename = {
+    "CS01012022": "nis_district",
+    "T_SEC_NL": "district_name",
+    "T_NIS6_NL": "city_name",
+}
+gdf_belgium.rename(columns=dict_rename, inplace=True)
+
+# Finding the closest districts to where I live & adding centroid
 n_districts = 10
+cols = ["nis_district", "district_name", "city_name", "geometry"]
 gdf_home_fred = gdf_belgium.loc[
-    gdf_belgium.distance(P_HOME_FRED).sort_values().index[:n_districts]
+    gdf_belgium.distance(P_HOME_FRED).sort_values().index[:n_districts], cols
 ]
+gdf_home_fred["center"] = gdf_home_fred.centroid
+
 
 # Save results as parquet file
 gdf_home_fred.to_parquet("districts_near_my_home.parquet")
