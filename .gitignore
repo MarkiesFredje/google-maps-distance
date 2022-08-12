@@ -1,3 +1,5 @@
 *.key
 *.parquet
 *.zip
+*.pickle
+__pycache__/
