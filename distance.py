@@ -55,4 +55,3 @@ if __name__ == "__main__":
             arrival_time=datetime(year=2022, month=8, day=12, hour=17),
         )
         dump(drive_times, "google_drive_times.pickle")
-        
