@@ -33,19 +33,22 @@ dict_rename = {
     "geoCoordinates.latitude": "y",
     "geoCoordinates.longitude": "x",
     "address.postalcode": "postcode",
-    "geometry": "location",
 }
 gdf_shops.rename(columns=dict_rename, inplace=True)
 
 
 # shops near me
+n_shops = 50
 cols = [
     "place_id",
     "name",
     "filiaalnr",
-    "location",
+    "geometry",
 ]
-gdf_shops_home = gdf_shops.loc[:, cols]
+gdf_shops_nearby = gdf_shops.loc[
+    gdf_shops.distance(P_HOME_FRED).sort_values().index[:n_shops], cols
+]
+
 
 # save to disk
-gdf_shops_home.to_parquet("shops_near_my_home.parquet")
+gdf_shops_nearby.to_parquet("shops_near_my_home.parquet")
