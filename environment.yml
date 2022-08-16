@@ -20,6 +20,7 @@ dependencies:
   - backcall=0.2.0=pyhd3eb1b0_0
   - beautifulsoup4=4.11.1=py310h06a4308_0
   - black=22.6.0=py310hff52083_2
+  - black-jupyter=22.6.0=hd8ed1ab_2
   - bleach=4.1.0=pyhd3eb1b0_0
   - blosc=1.21.1=h83bc5f7_3
   - boost-cpp=1.74.0=h75c5d50_8
@@ -29,9 +30,9 @@ dependencies:
   - brotlipy=0.7.0=py310h5764c6d_1004
   - bzip2=1.0.8=h7f98852_4
   - c-ares=1.18.1=h7f98852_0
-  - ca-certificates=2022.07.19=h06a4308_0
+  - ca-certificates=2022.6.15=ha878542_0
   - cairo=1.16.0=ha61ee94_1011
-  - certifi=2022.6.15=py310h06a4308_0
+  - certifi=2022.6.15=py310hff52083_0
   - cffi=1.15.1=py310h255011f_0
   - cfitsio=4.1.0=hd9d235c_0
   - charset-normalizer=2.1.0=pyhd8ed1ab_0
@@ -160,7 +161,7 @@ dependencies:
   - nss=3.78=h2350873_0
   - numpy=1.23.1=py310h53a5b5f_0
   - openjpeg=2.4.0=hb52868f_1
-  - openssl=1.1.1q=h7f8727e_0
+  - openssl=1.1.1q=h166bdaf_0
   - orc=1.7.4=h07ed6aa_0
   - packaging=21.3=pyhd8ed1ab_0
   - pandas=1.4.3=py310h769672d_0
@@ -217,6 +218,7 @@ dependencies:
   - threadpoolctl=3.1.0=pyh8a188c0_0
   - tiledb=2.9.5=h1e4a385_0
   - tk=8.6.12=h27826a3_0
+  - tokenize-rt=4.2.1=pyhd8ed1ab_0
   - tomli=2.0.1=pyhd8ed1ab_0
   - tornado=6.1=py310h7f8727e_0
   - traitlets=5.1.1=pyhd3eb1b0_0

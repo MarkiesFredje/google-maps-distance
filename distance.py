@@ -75,7 +75,7 @@ if __name__ == "__main__":
 
     # create openrouteservice api client
     try:
-        drive_times_ors = load("openroutservice_drive_times.pickle")
+        drive_times_ors = load("openrouteservice_drive_times.pickle")
     except FileNotFoundError:
         ors_api = openrouteservice(key=key_openrouteservice)
         # len(orgigins) * len(destination) <= 100
@@ -88,7 +88,7 @@ if __name__ == "__main__":
             profile="driving-car",
             resolve_locations=True,
         )
-        dump(drive_times_ors, "openroutservice_drive_times.pickle")
+        dump(drive_times_ors, "openrouteservice_drive_times.pickle")
 
     # prepare dataframe for origin destination traveltimes
     gdf_origins = gdf_districts.rename(

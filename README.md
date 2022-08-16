@@ -3,8 +3,13 @@
 In this project I'm exploring how to use google's Distance Matrix API.  
 Later I decided to explore [openrouteservice](https://openrouteservice.org/) based on tip from Brecht Van Maldergem.  
 
+## Making sense of the data & see results
+
+**Just look at the [notebook](explore.ipynb)**
+
 ## Repo structure
 
+1. `explore.ipynb` where I explore data and try to make sense of things
 1. `districts.py` generates a dataset with districts close to your home location
 1. `shops.py` generates a dataset with Colruyt Group shops near your home location
 1. `distance.py` uses districts & shops to calculate origin & destination travel times
