@@ -25,3 +25,4 @@ wget https://statbel.fgov.be/sites/default/files/files/opendata/Statistische%20s
 
 1. use `districts.py` and `shops.py` to build the parquet files with relevant data
 1. run `distance.py` to generate drive times and store results
+1. results are stored in `traveltime_shops_near_home.pickle`
