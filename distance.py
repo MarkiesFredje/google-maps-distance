@@ -1,5 +1,6 @@
 from typing import Tuple
 from datetime import datetime
+from numpy import asarray
 from pandas import DataFrame, json_normalize
 from geopandas import read_parquet, geodataframe
 from googlemaps import Client as Google
@@ -108,6 +109,14 @@ if __name__ == "__main__":
     gdf_traveltime["g_distance_m"] = df_google_traveltime["distance.value"].to_numpy()
     gdf_traveltime["g_traveltime_s"] = df_google_traveltime["duration.value"].to_numpy()
     gdf_traveltime["g_status"] = df_google_traveltime["status"].to_numpy()
+
+    # process results from openrouteservice
+    gdf_traveltime["ors_distance_m"] = asarray(drive_times_ors["distances"]).reshape(
+        len(list_origins_lng_lat) * len(list_destinations_lng_lat[:N_DESTINATION]),
+    )
+    gdf_traveltime["ors_traveltime_s"] = asarray(drive_times_ors["durations"]).reshape(
+        len(list_origins_lng_lat) * len(list_destinations_lng_lat[:N_DESTINATION]),
+    )
 
     # save results
     dump(gdf_traveltime, "traveltime_shops_near_home.pickle")
