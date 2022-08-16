@@ -46,6 +46,7 @@ if __name__ == "__main__":
         drive_times = load("google_drive_times.pickle")
     except FileNotFoundError:
         g_api = Client(key=key_google)
+        # len(orgigins) * len(destination) <= 100
         drive_times = g_api.distance_matrix(
             origins=list_origins,
             destinations=list_destinations[:10],

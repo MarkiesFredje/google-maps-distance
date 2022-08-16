@@ -190,4 +190,5 @@ dependencies:
   - zstd=1.5.2=h8a70e8d_3
   - pip:
     - googlemaps==4.6.0
+    - openrouteservice==2.3.3
 prefix: /home/fred/miniconda3/envs/google-maps-distance
