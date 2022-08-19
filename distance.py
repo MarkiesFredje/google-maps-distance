@@ -1,10 +1,12 @@
+from time import timezone
 from typing import Tuple
-from datetime import datetime
+from datetime import datetime, timezone
 from numpy import asarray
 from pandas import DataFrame, json_normalize
 from geopandas import read_parquet, geodataframe
 from googlemaps import Client as Google
 from openrouteservice import Client as openrouteservice
+from tomtom import Client as tomtom
 from googlemaps.convert import encode_polyline, decode_polyline  # lat, lng 50,4
 from joblib import load, dump
 
@@ -57,6 +59,7 @@ if __name__ == "__main__":
     # get api keys
     key_google = get_api_key("api_google.key")
     key_openrouteservice = get_api_key("api_openrouteservice.key")
+    key_tomtom = get_api_key("api_tomtom.key")
 
     # create google api client
     try:
@@ -79,7 +82,6 @@ if __name__ == "__main__":
         drive_times_ors = load("openrouteservice_drive_times.pickle")
     except FileNotFoundError:
         ors_api = openrouteservice(key=key_openrouteservice)
-        # len(orgigins) * len(destination) <= 100
         locations = list_origins_lng_lat + list_destinations_lng_lat[:N_DESTINATION]
         drive_times_ors = ors_api.distance_matrix(
             locations=locations,
@@ -90,6 +92,27 @@ if __name__ == "__main__":
             resolve_locations=True,
         )
         dump(drive_times_ors, "openrouteservice_drive_times.pickle")
+
+    # create tomtom api client
+    try:
+        drive_times_tomtom = load("tomtom_drive_times.pickle")
+    except FileNotFoundError:
+        tt_api = tomtom(key=key_tomtom)
+        drive_times_tomtom = tt_api.synchronous_matrix(
+            origins=list_origins_lat_lng,
+            destinations=list_destinations_lat_lng[:N_DESTINATION],
+            arrive_at=datetime(
+                year=2022,
+                month=8,
+                day=19,
+                hour=17,
+            ),
+            route_type="fastest",
+            traffic="historical",
+            travel_mode="car",
+            avoid="tollRoads",
+        )
+        dump(drive_times_tomtom, "tomtom_drive_times.pickle")
 
     # prepare dataframe for origin destination traveltimes
     gdf_origins = gdf_districts.rename(
@@ -117,6 +140,18 @@ if __name__ == "__main__":
     gdf_traveltime["ors_traveltime_s"] = asarray(drive_times_ors["durations"]).reshape(
         len(list_origins_lng_lat) * len(list_destinations_lng_lat[:N_DESTINATION]),
     )
+
+    # process results from tomtom
+    df_tomtom_traveltime = json_normalize(drive_times_tomtom["data"])
+    df_tomtom_traveltime.sort_values(
+        by=["originIndex", "destinationIndex"], inplace=True
+    )
+    gdf_traveltime["tt_distance_m"] = df_tomtom_traveltime[
+        "routeSummary.lengthInMeters"
+    ].to_numpy()
+    gdf_traveltime["tt_traveltime_s"] = df_tomtom_traveltime[
+        "routeSummary.travelTimeInSeconds"
+    ].to_numpy()
 
     # save results
     dump(gdf_traveltime, "traveltime_shops_near_home.pickle")

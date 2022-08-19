@@ -2,6 +2,7 @@
 
 In this project I'm exploring how to use google's Distance Matrix API.  
 Later I decided to explore [openrouteservice](https://openrouteservice.org/) based on tip from Brecht Van Maldergem.  
+During a conversation with Marco Branzi, I learned [TomTom](https://developer.tomtom.com/routing-api/documentation/matrix-routing-v2/matrix-routing-v2-service) offers the same service too
 
 ## Making sense of the data & see results
 
@@ -13,6 +14,7 @@ Later I decided to explore [openrouteservice](https://openrouteservice.org/) bas
 1. `districts.py` generates a dataset with districts close to your home location
 1. `shops.py` generates a dataset with Colruyt Group shops near your home location
 1. `distance.py` uses districts & shops to calculate origin & destination travel times
+1. `tomtom.py` is a client for talking to the tomtom api
 
 ## Initial setup
 
@@ -25,6 +27,7 @@ wget https://statbel.fgov.be/sites/default/files/files/opendata/Statistische%20s
 
 * add the `api_google.key` file to the repo (one line, with just your key)
 * add the `api_openrouteservice.key` file to the repo (one line, with just your key)
+* add the `api_tomtom.key` file to the repo (one line, with just your key)
 
 ## Producing drive times
 
